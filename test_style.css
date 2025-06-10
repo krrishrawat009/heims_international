@@ -1,0 +1,346 @@
+/* Test: Global Styles */
+.test-global * {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Test: Root Variables */
+.test-root {
+    color: var(--primary-color);
+    background: var(--light-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+/* Test: Body Styles */
+.test-body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    min-height: 100vh !important;
+    color: var(--dark-color) !important;
+    line-height: 1.6 !important;
+}
+
+/* Test: Container */
+.test-container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    background: white !important;
+    min-height: 100vh !important;
+    box-shadow: 0 0 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Test: Company Header */
+.test-company-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    color: white !important;
+    padding: 20px 30px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 3px solid var(--warning-color) !important;
+}
+
+/* Test: Button States */
+.test-btn {
+    padding: 10px 20px !important;
+    border-radius: var(--border-radius) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: var(--transition) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    justify-content: center !important;
+}
+.test-btn-primary { background: var(--secondary-color) !important; color: white !important; }
+.test-btn-success { background: var(--success-color) !important; color: white !important; }
+.test-btn-danger { background: var(--danger-color) !important; color: white !important; }
+.test-btn-warning { background: var(--warning-color) !important; color: white !important; }
+.test-btn-info { background: var(--info-color) !important; color: white !important; }
+.test-btn-secondary { background: #6c757d !important; color: white !important; }
+
+/* Test: Data Table */
+.test-data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background: white !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow) !important;
+    margin-bottom: 20px !important;
+}
+.test-data-table th, .test-data-table td {
+    padding: 12px 15px !important;
+    text-align: left !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+.test-data-table th {
+    background: var(--light-color) !important;
+    font-weight: 600 !important;
+    color: var(--primary-color) !important;
+}
+
+/* Test: Editable Table Cell */
+.test-editable-table td[contenteditable="true"] {
+    background: rgba(52,152,219,0.05) !important;
+    border: 2px dashed var(--secondary-color) !important;
+    cursor: text !important;
+}
+
+/* Test: Status Badges */
+.test-status-present { background: var(--success-color) !important; color: white !important; }
+.test-status-absent { background: var(--danger-color) !important; color: white !important; }
+.test-status-late { background: var(--warning-color) !important; color: white !important; }
+.test-status-active { background: var(--success-color) !important; color: white !important; }
+.test-status-inactive { background: var(--danger-color) !important; color: white !important; }
+.test-status-pending { background: var(--warning-color) !important; color: white !important; }
+.test-status-paid { background: var(--success-color) !important; color: white !important; }
+.test-status-unpaid { background: var(--danger-color) !important; color: white !important; }
+
+/* Test: Alerts */
+.test-alert-success {
+    background: rgba(39,174,96,0.1) !important;
+    border-color: var(--success-color) !important;
+    color: var(--success-color) !important;
+}
+.test-alert-error {
+    background: rgba(231,76,60,0.1) !important;
+    border-color: var(--danger-color) !important;
+    color: var(--danger-color) !important;
+}
+.test-alert-warning {
+    background: rgba(243,156,18,0.1) !important;
+    border-color: var(--warning-color) !important;
+    color: var(--warning-color) !important;
+}
+.test-alert-info {
+    background: rgba(23,162,184,0.1) !important;
+    border-color: var(--info-color) !important;
+    color: var(--info-color) !important;
+}
+
+/* Test: Utility Classes */
+.test-text-center { text-align: center !important; }
+.test-text-right { text-align: right !important; }
+.test-text-left { text-align: left !important; }
+.test-mb-10 { margin-bottom: 10px !important; }
+.test-mt-10 { margin-top: 10px !important; }
+.test-p-10 { padding: 10px !important; }
+.test-hidden { display: none !important; }
+.test-visible { display: block !important; }
+
+/* Test: Loading Spinner */
+.test-loading-spinner {
+    border: 4px solid #f3f3f3 !important;
+    border-top: 4px solid var(--secondary-color) !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    animation: spin 1s linear infinite !important;
+    margin: 20px auto !important;
+}
+
+/* Test: Tooltip */
+.test-tooltip {
+    position: relative !important;
+    display: inline-block !important;
+}
+.test-tooltip .test-tooltiptext {
+    visibility: hidden !important;
+    width: 200px !important;
+    background-color: var(--dark-color) !important;
+    color: white !important;
+    text-align: center !important;
+    border-radius: var(--border-radius) !important;
+    padding: 8px 12px !important;
+    position: absolute !important;
+    z-index: 1000 !important;
+    bottom: 125% !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s !important;
+    font-size: 0.85rem !important;
+}
+.test-tooltip:hover .test-tooltiptext {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+/* Test: Global Styles */
+.test-global * {
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* Test: Root Variables */
+.test-root {
+    color: var(--primary-color);
+    background: var(--light-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+/* Test: Body Styles */
+.test-body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    min-height: 100vh !important;
+    color: var(--dark-color) !important;
+    line-height: 1.6 !important;
+}
+
+/* Test: Container */
+.test-container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    background: white !important;
+    min-height: 100vh !important;
+    box-shadow: 0 0 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Test: Company Header */
+.test-company-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+    color: white !important;
+    padding: 20px 30px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 3px solid var(--warning-color) !important;
+}
+
+/* Test: Button States */
+.test-btn {
+    padding: 10px 20px !important;
+    border-radius: var(--border-radius) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: var(--transition) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    text-decoration: none !important;
+    justify-content: center !important;
+}
+.test-btn-primary { background: var(--secondary-color) !important; color: white !important; }
+.test-btn-success { background: var(--success-color) !important; color: white !important; }
+.test-btn-danger { background: var(--danger-color) !important; color: white !important; }
+.test-btn-warning { background: var(--warning-color) !important; color: white !important; }
+.test-btn-info { background: var(--info-color) !important; color: white !important; }
+.test-btn-secondary { background: #6c757d !important; color: white !important; }
+
+/* Test: Data Table */
+.test-data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background: white !important;
+    border-radius: var(--border-radius) !important;
+    box-shadow: var(--shadow) !important;
+    margin-bottom: 20px !important;
+}
+.test-data-table th, .test-data-table td {
+    padding: 12px 15px !important;
+    text-align: left !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+.test-data-table th {
+    background: var(--light-color) !important;
+    font-weight: 600 !important;
+    color: var(--primary-color) !important;
+}
+
+/* Test: Editable Table Cell */
+.test-editable-table td[contenteditable="true"] {
+    background: rgba(52,152,219,0.05) !important;
+    border: 2px dashed var(--secondary-color) !important;
+    cursor: text !important;
+}
+
+/* Test: Status Badges */
+.test-status-present { background: var(--success-color) !important; color: white !important; }
+.test-status-absent { background: var(--danger-color) !important; color: white !important; }
+.test-status-late { background: var(--warning-color) !important; color: white !important; }
+.test-status-active { background: var(--success-color) !important; color: white !important; }
+.test-status-inactive { background: var(--danger-color) !important; color: white !important; }
+.test-status-pending { background: var(--warning-color) !important; color: white !important; }
+.test-status-paid { background: var(--success-color) !important; color: white !important; }
+.test-status-unpaid { background: var(--danger-color) !important; color: white !important; }
+
+/* Test: Alerts */
+.test-alert-success {
+    background: rgba(39,174,96,0.1) !important;
+    border-color: var(--success-color) !important;
+    color: var(--success-color) !important;
+}
+.test-alert-error {
+    background: rgba(231,76,60,0.1) !important;
+    border-color: var(--danger-color) !important;
+    color: var(--danger-color) !important;
+}
+.test-alert-warning {
+    background: rgba(243,156,18,0.1) !important;
+    border-color: var(--warning-color) !important;
+    color: var(--warning-color) !important;
+}
+.test-alert-info {
+    background: rgba(23,162,184,0.1) !important;
+    border-color: var(--info-color) !important;
+    color: var(--info-color) !important;
+}
+
+/* Test: Utility Classes */
+.test-text-center { text-align: center !important; }
+.test-text-right { text-align: right !important; }
+.test-text-left { text-align: left !important; }
+.test-mb-10 { margin-bottom: 10px !important; }
+.test-mt-10 { margin-top: 10px !important; }
+.test-p-10 { padding: 10px !important; }
+.test-hidden { display: none !important; }
+.test-visible { display: block !important; }
+
+/* Test: Loading Spinner */
+.test-loading-spinner {
+    border: 4px solid #f3f3f3 !important;
+    border-top: 4px solid var(--secondary-color) !important;
+    border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    animation: spin 1s linear infinite !important;
+    margin: 20px auto !important;
+}
+
+/* Test: Tooltip */
+.test-tooltip {
+    position: relative !important;
+    display: inline-block !important;
+}
+.test-tooltip .test-tooltiptext {
+    visibility: hidden !important;
+    width: 200px !important;
+    background-color: var(--dark-color) !important;
+    color: white !important;
+    text-align: center !important;
+    border-radius: var(--border-radius) !important;
+    padding: 8px 12px !important;
+    position: absolute !important;
+    z-index: 1000 !important;
+    bottom: 125% !important;
+    left: 50% !important;
+    margin-left: -100px !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s !important;
+    font-size: 0.85rem !important;
+}
+.test-tooltip:hover .test-tooltiptext {
+    visibility: visible !important;
+    opacity: 1 !important;
+}

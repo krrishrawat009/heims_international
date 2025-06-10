@@ -1,0 +1,333 @@
+<!--
+    Heim International - Labor Management System
+
+    index.html
+
+    This HTML file serves as the main interface for the Heim International Labor Management System.
+    It provides a comprehensive dashboard for managing construction workforce operations, including:
+
+    - User Authentication: Login form supporting Admin and Supervisor roles.
+    - Company Header: Displays company information, current date/time, and logout functionality.
+    - Navigation Tabs:
+        - Attendance: Daily attendance tracking with check-in/out, overtime, and notes.
+        - Manage Workers: Add, edit, and manage worker records.
+        - Salary Management: Monthly salary calculation, summary, and export options.
+        - Advances: Manage advance payments to workers, including approval and repayment tracking.
+        - Reports: Generate and view analytics on attendance, payroll, advances, and workforce metrics.
+    - Modal Dialog: For editing records in a user-friendly way.
+    - Responsive Design: Uses external CSS for layout and style.
+    - JavaScript Integration: All dynamic functionality is handled by the bundled JS file (dist/bundle.js).
+
+    Usage:
+    - Open this file in a web browser.
+    - Use the login form to access system features based on your role.
+    - Navigate between tabs to manage attendance, workers, salary, advances, and reports.
+    - All data manipulation and UI updates are handled via JavaScript.
+
+    Note:
+    - Demo credentials are provided for testing (see login section).
+    - This file is intended to be used with the associated CSS and JS files.
+
+    Author: Heim International
+    Last Updated: 2024
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heim International - Labor Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Company Header -->
+        <div class="company-header">
+            <div class="company-info">
+                <h1>HEIM INTERNATIONAL</h1>
+                <div class="company-details">
+                    <p><strong>Address:</strong> C-2/2551, 110070</p>
+                    <p><strong>GST No:</strong> 07ADPPR1000D1ZZ</p>
+                    <p><strong>Admin:</strong> Rishi Rawat</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <span id="currentDateTime"></span>
+                <button class="btn btn-danger" onclick="logout()" id="logoutBtn" style="display: none;">Logout</button>
+                <button class="btn btn-danger hidden" onclick="logout()" id="logoutBtn">Logout</button>
+        </div>
+
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <div class="login-form">
+                <h2>System Login</h2>
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" required>
+                        <option value="" name="role">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="supervisor">Supervisor</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="login()">Login</button>
+                <div id="loginAlert" role="alert"></div>
+                <div class="demo-credentials">
+                    <h4>Demo Credentials:</h4>
+                    <p><strong>Admin:</strong> rishi / admin123</p>
+                    <p><strong>Supervisor:</strong> supervisor / super123</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div id="mainContent" class="main-content">
+            <div class="welcome-section">
+                <h2>Welcome<span id="userRole"></span></h2>
+                <p>Manage your construction workforce</p>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="showTab('attendance')">Attendance</button>
+                <button class="tab-btn" onclick="showTab('workers')">Manage Workers</button>
+                <button class="tab-btn" onclick="showTab('salary')">Salary Management</button>
+                <button class="tab-btn" onclick="showTab('advances')">Advances</button>
+                <button class="tab-btn" onclick="showTab('reports')">Reports</button>
+            </div>
+
+            <!-- Attendance Tab -->
+            <div id="attendanceTab" class="tab-content active">
+                <div class="section-header">
+                    <h3>Daily Attendance</h3>
+                    <div class="date-selector">
+                        <label>Date:</label>
+                        <input type="date" id="attendanceDate" name="attendanceDate" onchange="loadAttendanceForDate()">
+                        <button class="btn btn-success" onclick="saveAttendance()">Save Attendance</button>
+                    </div>
+                </div>
+                
+                <div class="attendance-table-container">
+                    <table class="data-table" id="attendanceTable">
+                        <thead>
+                            <tr>
+                                <th>Worker Name</th>
+                                <th>Role</th>
+                                <th>Daily Rate (₹)</th>
+                                <th>Status</th>
+                                <th>Check In</th>
+                                <th>Check Out</th>
+                                <th>Hours</th>
+                                <th>Overtime</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTableBody">
+                            <!-- Attendance rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Workers Management Tab -->
+            <div id="workersTab" class="tab-content">
+                <div class="section-header">
+                    <h3>Manage Workers</h3>
+                    <button class="btn btn-success" onclick="addNewWorkerRow()">+ Add New Worker</button>
+                </div>
+
+                <div class="workers-table-container">
+                    <table class="data-table editable-table" id="workersTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Daily Rate (₹)</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Join Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="workersTableBody">
+                            <!-- Workers rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Salary Management Tab -->
+            <div id="salaryTab" class="tab-content">
+                <div class="section-header">
+                    <h3>Monthly Salary Management</h3>
+                    <div class="salary-controls">
+                        <label>Select Month:</label>
+                        <input type="month" id="salaryMonth" name="salaryMonth" onchange="generateSalaryReport()">
+                        <button class="btn btn-primary" onclick="generateSalaryReport()">Generate Report</button>
+                        <button class="btn btn-success" onclick="exportSalaryReport()">Export PDF</button>
+                    </div>
+                </div>
+
+                <div class="salary-summary">
+                    <div class="summary-card">
+                        <h4>Total Workers</h4>
+                        <span id="totalWorkersCount">0</span>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Total Salary</h4>
+                        <span id="totalSalaryAmount">₹0</span>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Total Advances</h4>
+                        <span id="totalAdvancesAmount">₹0</span>
+                    </div>
+                    <div class="summary-card">
+                        <h4>Net Payable</h4>
+                        <span id="netPayableAmount">₹0</span>
+                    </div>
+                </div>
+
+                <div class="salary-table-container">
+                    <table class="data-table editable-table" id="salaryTable">
+                        <thead>
+                            <tr>
+                                <th>Worker Name</th>
+                                <th>Role</th>
+                                <th>Daily Rate (₹)</th>
+                                <th>Days Present</th>
+                                <th>Regular Hours</th>
+                                <th>Overtime Hours</th>
+                                <th>Overtime Rate (₹)</th>
+                                <th>Basic Salary (₹)</th>
+                                <th>Overtime Pay (₹)</th>
+                                <th>Bonus (₹)</th>
+                                <th>Deductions (₹)</th>
+                                <th>Advances (₹)</th>
+                                <th>Net Salary (₹)</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salaryTableBody">
+                            <!-- Salary rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Advances Tab -->
+            <div id="advancesTab" class="tab-content">
+                <div class="section-header">
+                    <h3>Advance Money Management</h3>
+                    <button class="btn btn-success" onclick="addAdvanceRecord()">+ Add Advance</button>
+                </div>
+
+                <div class="advances-table-container">
+                    <table class="data-table editable-table" id="advancesTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Worker Name</th>
+                                <th>Amount (₹)</th>
+                                <th>Purpose</th>
+                                <th>Approved By</th>
+                                <th>Status</th>
+                                <th>Repayment Date</th>
+                                <th>Notes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="advancesTableBody">
+                            <!-- Advances rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reportsTab" class="tab-content">
+                <div class="section-header">
+                    <h3>Reports & Analytics</h3>
+                    <div class="report-controls">
+                        <button class="btn btn-primary" onclick="generateAttendanceReport()">Attendance Report</button>
+                        <button class="btn btn-primary" onclick="generatePayrollReport()">Payroll Report</button>
+                        <button class="btn btn-primary" onclick="generateAdvancesReport()">Advances Report</button>
+                    </div>
+                </div>
+
+                <div class="reports-dashboard">
+                    <div class="dashboard-cards">
+                        <div class="dashboard-card">
+                            <h4>Attendance Rate</h4>
+                            <div class="metric">
+                                <span id="attendanceRateMetric">0%</span>
+                                <small>This Month</small>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h4>Monthly Payroll</h4>
+                            <div class="metric">
+                                <span id="monthlyPayrollMetric">₹0</span>
+                                <small>Current Month</small>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h4>Pending Advances</h4>
+                            <div class="metric">
+                                <span id="pendingAdvancesMetric">₹0</span>
+                                <small>To be repaid</small>
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h4>Active Workers</h4>
+                            <div class="metric">
+                                <span id="activeWorkersMetric">0</span>
+                                <small>Currently employed</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-container">
+                        <div class="chart-card">
+                            <h4>Weekly Attendance Trend</h4>
+                            <canvas id="attendanceChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h4>Monthly Salary Distribution</h4>
+                            <canvas id="salaryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for editing -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h3 id="modalTitle">Edit Record</h3>
+                <div id="modalBody">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-success" onclick="saveModal()">Save</button>
+                    <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="dist/bundle.js"></script>
+</body>
+</html></body>
+<!-- End of document -->
+</html>

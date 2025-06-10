@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index.html UI Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Mocha & Chai for browser-based testing -->
+    <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css">
+    <style>
+        body { margin: 2em; }
+        iframe { width: 100%; height: 0; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>index.html UI Tests</h1>
+    <div id="mocha"></div>
+    <iframe id="appFrame" src="index.html" style="height:600px; display:none;"></iframe>
+    <script src="https://unpkg.com/mocha/mocha.js"></script>
+    <script src="https://unpkg.com/chai/chai.js"></script>
+    <script>
+        mocha.setup('bdd');
+        const { expect } = chai;
+    </script>
+    <script>
+        // Helper to wait for iframe load and DOM ready
+        function withAppFrame(testFn) {
+            return function(done) {
+                const frame = document.getElementById('appFrame');
+                if (frame.contentDocument.readyState === 'complete') {
+                    testFn(frame.contentWindow, frame.contentDocument, done);
+                } else {
+                    frame.onload = () => testFn(frame.contentWindow, frame.contentDocument, done);
+                }
+            };
+        }
+    </script>
+    <script>
+        describe('index.html UI Structure', function() {
+            this.timeout(4000);
+
+            it('should load the page and have the correct title', withAppFrame((win, doc, done) => {
+                expect(doc.title).to.equal('Heim International - Labor Management System');
+                done();
+            }));
+
+            it('should display the company header with correct info', withAppFrame((win, doc, done) => {
+                const header = doc.querySelector('.company-header');
+                expect(header).to.exist;
+                expect(header.textContent).to.include('HEIM INTERNATIONAL');
+                expect(header.textContent).to.include('C-2/2551, 110070');
+                expect(header.textContent).to.include('07ADPPR1000D1ZZ');
+                expect(header.textContent).to.include('Rishi Rawat');
+                done();
+            }));
+
+            it('should have a login section with username, password, and role fields', withAppFrame((win, doc, done) => {
+                const loginSection = doc.getElementById('loginSection');
+                expect(loginSection).to.exist;
+                expect(loginSection.querySelector('input#username')).to.exist;
+                expect(loginSection.querySelector('input#password')).to.exist;
+                expect(loginSection.querySelector('select#role')).to.exist;
+                done();
+            }));
+
+            it('should have navigation tabs for Attendance, Manage Workers, Salary Management, Advances, Reports', withAppFrame((win, doc, done) => {
+                const navTabs = Array.from(doc.querySelectorAll('.nav-tabs .tab-btn')).map(btn => btn.textContent.trim());
+                expect(navTabs).to.include.members([
+                    'Attendance', 'Manage Workers', 'Salary Management', 'Advances', 'Reports'
+                ]);
+                done();
+            }));
+
+            it('should have attendance, workers, salary, advances, and reports tab content sections', withAppFrame((win, doc, done) => {
+                expect(doc.getElementById('attendanceTab')).to.exist;
+                expect(doc.getElementById('workersTab')).to.exist;
+                expect(doc.getElementById('salaryTab')).to.exist;
+                expect(doc.getElementById('advancesTab')).to.exist;
+                expect(doc.getElementById('reportsTab')).to.exist;
+                done();
+            }));
+
+            it('should have a modal for editing with correct structure', withAppFrame((win, doc, done) => {
+                const modal = doc.getElementById('editModal');
+                expect(modal).to.exist;
+                expect(modal.querySelector('.modal-content')).to.exist;
+                expect(modal.querySelector('#modalTitle')).to.exist;
+                expect(modal.querySelector('#modalBody')).to.exist;
+                done();
+            }));
+
+            it('should have a script tag loading dist/bundle.js', withAppFrame((win, doc, done) => {
+                const scripts = Array.from(doc.querySelectorAll('script[src]')).map(s => s.getAttribute('src'));
+                expect(scripts).to.include('dist/bundle.js');
+                done();
+            }));
+
+            it('should have demo credentials for Admin and Supervisor in the login section', withAppFrame((win, doc, done) => {
+                const demo = doc.querySelector('.demo-credentials');
+                expect(demo).to.exist;
+                expect(demo.textContent).to.include('rishi / admin123');
+                expect(demo.textContent).to.include('supervisor / super123');
+                done();
+            }));
+
+            it('should have tables with correct IDs in each tab', withAppFrame((win, doc, done) => {
+                expect(doc.getElementById('attendanceTable')).to.exist;
+                expect(doc.getElementById('workersTable')).to.exist;
+                expect(doc.getElementById('salaryTable')).to.exist;
+                expect(doc.getElementById('advancesTable')).to.exist;
+                done();
+            }));
+
+            it('should have summary cards in the salary tab', withAppFrame((win, doc, done) => {
+                const salaryTab = doc.getElementById('salaryTab');
+                expect(salaryTab.querySelector('#totalWorkersCount')).to.exist;
+                expect(salaryTab.querySelector('#totalSalaryAmount')).to.exist;
+                expect(salaryTab.querySelector('#totalAdvancesAmount')).to.exist;
+                expect(salaryTab.querySelector('#netPayableAmount')).to.exist;
+                done();
+            }));
+
+            it('should have dashboard metrics in the reports tab', withAppFrame((win, doc, done) => {
+                const reportsTab = doc.getElementById('reportsTab');
+                expect(reportsTab.querySelector('#attendanceRateMetric')).to.exist;
+                expect(reportsTab.querySelector('#monthlyPayrollMetric')).to.exist;
+                expect(reportsTab.querySelector('#pendingAdvancesMetric')).to.exist;
+                expect(reportsTab.querySelector('#activeWorkersMetric')).to.exist;
+                done();
+            }));
+
+            it('should have canvas elements for charts in the reports tab', withAppFrame((win, doc, done) => {
+                const reportsTab = doc.getElementById('reportsTab');
+                expect(reportsTab.querySelector('#attendanceChart')).to.exist;
+                expect(reportsTab.querySelector('#salaryChart')).to.exist;
+                done();
+            }));
+
+        });
+    </script>
+    <script>
+        // Show the iframe after Mocha loads to avoid race conditions
+        window.onload = function() {
+            document.getElementById('appFrame').style.display = 'block';
+            mocha.run();
+        };
+    </script>
+</body>
+</html>
